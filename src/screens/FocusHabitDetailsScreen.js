@@ -25,6 +25,8 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
     const [dimensions, setDimensions] = useState(Dimensions.get('window'));
     const [today, setToday] = useState(getFormattedDate());
     const [modalVisible, setModalVisible] = useState(false);
+    const [deleteHabitModalVisible, setDeleteHabitModalVisible] = useState(false);
+    const [deleteHabit, setDeleteHabit] = useState(null);
     const [selectedDay, setSelectedDay] = useState(new Date().getDate());
 
     const currentDate = new Date();
@@ -63,14 +65,14 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
             const currentMonth = now.getMonth();
             let storedHabits = await AsyncStorage.getItem('focusHabits');
             storedHabits = storedHabits ? JSON.parse(storedHabits) : [];
-
+    
             storedHabits = storedHabits.map(habit => {
                 if (!habit.lastResetMonth || habit.lastResetMonth !== currentMonth) {
                     return { ...habit, doneDays: [], notFullfilledDays: [], lastResetMonth: currentMonth };
                 }
                 return habit;
             });
-
+    
             const habitIndex = storedHabits.findIndex(habit => habit.id === selectedFocusHabit.id);
             if (habitIndex !== -1) {
                 const habit = storedHabits[habitIndex];
@@ -87,7 +89,13 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                 }
                 storedHabits[habitIndex] = habit;
                 await AsyncStorage.setItem('focusHabits', JSON.stringify(storedHabits));
-
+    
+                // Update updatedStatuses array with the new update date
+                let updatedStatuses = await AsyncStorage.getItem('updatedStatuses');
+                updatedStatuses = updatedStatuses ? JSON.parse(updatedStatuses) : [];
+                updatedStatuses.push(new Date().toISOString());
+                await AsyncStorage.setItem('updatedStatuses', JSON.stringify(updatedStatuses));
+    
                 const updatedHabit = storedHabits.find(habit => habit.id === selectedFocusHabit.id);
                 setSelectedFocusHabit(updatedHabit);
             }
@@ -102,10 +110,10 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
             // Retrieve the latest habits directly from AsyncStorage
             let storedHabits = await AsyncStorage.getItem('focusHabits');
             storedHabits = storedHabits ? JSON.parse(storedHabits) : [];
-            
+
             const updatedFocusHabits = storedHabits.filter(fHab => fHab.id !== removeHabit.id);
             await AsyncStorage.setItem('focusHabits', JSON.stringify(updatedFocusHabits));
-            
+
             setSelectedScreen('Home');
             setFocusHabits(updatedFocusHabits);
             setSelectedFocusHabit(null);
@@ -157,8 +165,7 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                         width: dimensions.height * 0.063,
                     }}
                     onPress={() => {
-                        handleDeleteFocusHabit(selectedFocusHabit);
-                        // setSelectedScreen('Home');
+                        setDeleteHabitModalVisible(true);
                     }}
                 >
                     <Image
@@ -495,6 +502,137 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                                     Not fulfilled
                                 </Text>
                             </TouchableOpacity>
+                        </View>
+                    </View>
+                </TouchableWithoutFeedback>
+            </Modal>
+
+            <Modal visible={deleteHabitModalVisible} transparent={true} animationType="fade">
+                <View onPress={() => { setModalVisible(false) }} style={{
+                    height: dimensions.height,
+                    position: 'absolute',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    zIndex: 999,
+                    width: dimensions.width,
+                    top: 0,
+                }}>
+                </View>
+
+                <TouchableWithoutFeedback onPress={() => { setDeleteHabitModalVisible(false) }}>
+                    <View
+                        style={{
+                            width: dimensions.width,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 999,
+                            width: '100%',
+                            paddingHorizontal: dimensions.width * 0.052,
+                            alignSelf: 'center',
+                            height: dimensions.height,
+                        }}
+                    >
+                        <View style={{
+                            width: dimensions.width * 0.9,
+                            paddingVertical: dimensions.height * 0.03,
+                            borderRadius: dimensions.width * 0.07,
+                            backgroundColor: '#fff',
+                            height: dimensions.height * 0.3,
+                        }}>
+                            <Image
+                                source={require('../assets/images/focusTrashImage.png')}
+                                style={{
+                                    width: dimensions.height * 0.08,
+                                    height: dimensions.height * 0.08,
+                                    alignSelf: 'center',
+                                }}
+                                resizeMode='contain'
+                            />
+
+                            <Text style={{
+                                marginTop: dimensions.height * 0.01,
+                                textAlign: 'center',
+                                fontSize: dimensions.width * 0.07,
+                                fontFamily: fontTTTravelsBlack,
+                                alignSelf: 'center',
+                                color: '#000000',
+                                paddingHorizontal: dimensions.width * 0.05,
+                            }}
+                            >
+                                Delete
+                            </Text>
+
+                            <Text style={{
+                                marginTop: dimensions.height * 0.01,
+                                textAlign: 'center',
+                                fontSize: dimensions.width * 0.04,
+                                fontFamily: fontTTTravelsRegular,
+                                fontWeight: 400,
+                                alignSelf: 'center',
+                                color: '#000000',
+                                paddingHorizontal: dimensions.width * 0.03,
+                            }}
+                            >
+                                Are you sure you want to delete this?
+                            </Text>
+
+                            <View style={{
+                                width: dimensions.width * 0.75,
+                                alignSelf: 'center',
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginTop: dimensions.height * 0.02,
+                            }}>
+                                <TouchableOpacity
+                                    onPress={() => handleDeleteFocusHabit(selectedFocusHabit)}
+                                    style={{
+                                        alignSelf: 'center',
+                                        alignItems: 'center',
+                                        borderRadius: dimensions.width * 0.6,
+                                        justifyContent: 'center',
+                                        width: dimensions.width * 0.35,
+                                        marginTop: dimensions.height * 0.005,
+                                        backgroundColor: '#FF1515',
+                                        height: dimensions.height * 0.065,
+                                    }}>
+                                    <Text style={{
+                                        textAlign: 'center',
+                                        color: 'white',
+                                        fontSize: dimensions.width * 0.045,
+                                        alignSelf: 'center',
+                                        fontFamily: fontTTTravelsBlack,
+                                        alignItems: 'center',
+                                    }}
+                                    >
+                                        Delete
+                                    </Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    onPress={() => setDeleteHabitModalVisible(false)}
+                                    style={{
+                                        alignItems: 'center',
+                                        borderRadius: dimensions.width * 0.6,
+                                        height: dimensions.height * 0.065,
+                                        justifyContent: 'center',
+                                        width: dimensions.width * 0.35,
+                                        backgroundColor: '#007AFF',
+                                        marginTop: dimensions.height * 0.007,
+                                        alignSelf: 'center',
+                                    }}>
+                                    <Text style={{
+                                        color: 'white',
+                                        fontSize: dimensions.width * 0.045,
+                                        alignItems: 'center',
+                                        fontFamily: fontTTTravelsBlack,
+                                        alignSelf: 'center',
+                                        textAlign: 'center',
+                                    }}
+                                    >
+                                        Cancel
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                 </TouchableWithoutFeedback>

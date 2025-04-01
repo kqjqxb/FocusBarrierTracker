@@ -25,7 +25,7 @@ import { ArrowLeftIcon, CheckIcon, XMarkIcon } from 'react-native-heroicons/soli
 
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import AnalysisScreen from './AnalysisScreen';
+import FocusAnalysScreen from './FocusAnalysScreen';
 import FocusTestScreen from './FocusTestScreen';
 
 
@@ -137,7 +137,7 @@ const HomeScreen = () => {
 
 
 
-  const saveProject = async () => {
+  const saveFocusHabit = async () => {
     try {
       const exFocusBarHabbits = await AsyncStorage.getItem('focusHabits');
       const focusHabits = exFocusBarHabbits ? JSON.parse(exFocusBarHabbits) : [];
@@ -152,6 +152,7 @@ const HomeScreen = () => {
         reminder: selectedReminder,
         doneDays: [],
         notFullfilledDays: [],
+        updatedDate: new Date(),
       };
 
       focusHabits.unshift(fHabit);
@@ -447,7 +448,7 @@ const HomeScreen = () => {
       ) : selectedScreen === 'Focusing' ? (
         <FocusingScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} />
       ) : selectedScreen === 'Analysis' ? (
-        <AnalysisScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} />
+        <FocusAnalysScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} />
       ) : selectedScreen === 'FocusTest' ? (
         <FocusTestScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} setFocusTestStarted={setFocusTestStarted} focusTestStarted={focusTestStarted}/>
       ) : null}
@@ -604,7 +605,7 @@ const HomeScreen = () => {
                   backgroundColor: title.replace(/\s/g, '').length === 0 || selectedPeriodicity === '' || selectedReminder === '' ? '#8A8A8E' : '#B08711',
                 }}
                 onPress={() => {
-                  saveProject();
+                  saveFocusHabit();
                 }}
               >
                 <CheckIcon size={dimensions.width * 0.07} color='white' />

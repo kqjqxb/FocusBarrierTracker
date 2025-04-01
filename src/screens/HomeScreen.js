@@ -26,13 +26,14 @@ import { ArrowLeftIcon, CheckIcon, XMarkIcon } from 'react-native-heroicons/soli
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import AnalysisScreen from './AnalysisScreen';
+import FocusTestScreen from './FocusTestScreen';
 
 
 const homePagesButtons = [
   { screen: 'Home', title: 'Habit', iconImage: require('../assets/icons/simpleFocusIcons/proCalendar.png'), selectedIconImage: require('../assets/icons/goldFocusIcons/proCalendar.png') },
   { screen: 'Focusing', title: ' Productivity', iconImage: require('../assets/icons/simpleFocusIcons/proCase.png'), selectedIconImage: require('../assets/icons/goldFocusIcons/proCase.png') },
   { screen: 'Analysis', title: 'Analysis', iconImage: require('../assets/icons/simpleFocusIcons/proAnalysis.png'), selectedIconImage: require('../assets/icons/goldFocusIcons/proAnalysis.png') },
-  { screen: 'Test', title: 'Test', iconImage: require('../assets/icons/simpleFocusIcons/proTest.png'), selectedIconImage: require('../assets/icons/goldFocusIcons/proTest.png') },
+  { screen: 'FocusTest', title: 'Test', iconImage: require('../assets/icons/simpleFocusIcons/proTest.png'), selectedIconImage: require('../assets/icons/goldFocusIcons/proTest.png') },
   { screen: 'Settings', title: 'Settings', iconImage: require('../assets/icons/simpleFocusIcons/proSettings.png'), selectedIconImage: require('../assets/icons/goldFocusIcons/proSettings.png') },
 ];
 
@@ -55,6 +56,7 @@ const HomeScreen = () => {
   const [activeSwipeableId, setActiveSwipeableId] = useState(null);
   const swipeableRefs = useRef(new Map());
 
+  const [focusTestStarted, setFocusTestStarted] = useState(false);
 
   const [focusHabits, setFocusHabits] = useState([])
   const [focusTime, setFocusTime] = useState(new Date());
@@ -446,9 +448,11 @@ const HomeScreen = () => {
         <FocusingScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} />
       ) : selectedScreen === 'Analysis' ? (
         <AnalysisScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} />
+      ) : selectedScreen === 'FocusTest' ? (
+        <FocusTestScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} setFocusTestStarted={setFocusTestStarted} focusTestStarted={focusTestStarted}/>
       ) : null}
 
-      {selectedScreen !== 'ProjectDetails' && (
+      {!(selectedScreen === 'FocusTest' && focusTestStarted) && (
 
         <View
           style={{

@@ -440,7 +440,7 @@ const HomeScreen = () => {
         />
       ) : selectedScreen === 'HabitDetails' ? (
         <FocusHabitDetailsScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} selectedFocusHabit={selectedFocusHabit} 
-          setSelectedFocusHabit={setSelectedFocusHabit} 
+          setSelectedFocusHabit={setSelectedFocusHabit} focusHabits={focusHabits} setFocusHabits={setFocusHabits}
         />
       ) : selectedScreen === 'Focusing' ? (
         <FocusingScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} />
@@ -708,7 +708,9 @@ const HomeScreen = () => {
               {['Daily', 'Twice a week', '3 times a week', '4 times a week', 'Once a week'].map((periodicity, index) => (
                 <TouchableOpacity
                   onPress={() => {
-                    setSelectedPeriodicity(periodicity);
+                    if (selectedPeriodicity === periodicity) {
+                      setSelectedPeriodicity('');
+                    } else setSelectedPeriodicity(periodicity);
                   }}
                   key={index} style={{
                     width: dimensions.width * 0.9,

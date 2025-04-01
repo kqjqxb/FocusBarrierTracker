@@ -252,40 +252,40 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                         </Text>
 
                         <Text style={{
-                            textAlign: 'flex-start',
+                            fontWeight: 600,
                             marginTop: dimensions.height * 0.006,
                             fontFamily: fontTTTravelsRegular,
                             fontSize: dimensions.width * 0.045,
                             alignSelf: 'left',
+                            textAlign: 'flex-start',
                             color: '#000',
-                            fontWeight: 600,
                         }}
                         >
                             {formatFocusBarTime(selectedFocusHabit.time)}
                         </Text>
 
                         <View style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'flex-start',
                             marginTop: dimensions.height * 0.02,
+                            alignItems: 'center',
+                            flexDirection: 'row',
                             alignSelf: 'flex-start',
+                            justifyContent: 'flex-start',
                         }}>
                             <View style={{
-                                paddingHorizontal: dimensions.width * 0.04,
+                                alignItems: 'center',
                                 height: dimensions.height * 0.055,
-                                backgroundColor: '#D8D8D8',
+                                paddingHorizontal: dimensions.width * 0.04,
                                 borderRadius: dimensions.width * 0.6,
                                 justifyContent: 'center',
-                                alignItems: 'center',
+                                backgroundColor: '#D8D8D8',
                             }}>
                                 <Text style={{
-                                    textAlign: 'left',
-                                    fontFamily: fontTTTravelsRegular,
-                                    fontSize: dimensions.width * 0.03,
-                                    fontWeight: 500,
-                                    alignSelf: 'flex-start',
                                     color: 'rgba(0, 0, 0, 0.5)',
+                                    textAlign: 'left',
+                                    fontWeight: 500,
+                                    fontFamily: fontTTTravelsRegular,
+                                    alignSelf: 'flex-start',
+                                    fontSize: dimensions.width * 0.03,
                                 }}
                                 >
                                     {selectedFocusHabit.periodicity}
@@ -293,21 +293,21 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                             </View>
 
                             <View style={{
-                                paddingHorizontal: dimensions.width * 0.025,
+                                alignItems: 'center',
                                 height: dimensions.height * 0.055,
-                                backgroundColor: '#D8D8D8',
+                                marginLeft: dimensions.width * 0.01,
                                 borderRadius: dimensions.width * 0.6,
                                 justifyContent: 'center',
-                                alignItems: 'center',
-                                marginLeft: dimensions.width * 0.01,
+                                backgroundColor: '#D8D8D8',
+                                paddingHorizontal: dimensions.width * 0.025,
                             }}>
                                 <Text style={{
                                     textAlign: 'left',
-                                    fontFamily: fontTTTravelsRegular,
-                                    fontSize: dimensions.width * 0.03,
                                     fontWeight: 500,
-                                    alignSelf: 'flex-start',
+                                    fontSize: dimensions.width * 0.03,
                                     color: 'rgba(0, 0, 0, 0.5)',
+                                    alignSelf: 'flex-start',
+                                    fontFamily: fontTTTravelsRegular,
                                 }}
                                 >
                                     {selectedFocusHabit.reminder}
@@ -317,55 +317,55 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
                         <Text
                             style={{
-                                fontFamily: fontInterRegular,
-                                fontWeight: 500,
+                                marginTop: dimensions.height * 0.025,
                                 fontSize: dimensions.width * 0.037,
                                 color: '#999999',
                                 opacity: 0.7,
-                                marginTop: dimensions.height * 0.025,
+                                fontWeight: 500,
                                 alignSelf: 'flex-start',
+                                fontFamily: fontInterRegular,
                             }}
                         >
                             Progress
                         </Text>
 
                         <Text style={{
-                            textAlign: 'left',
-                            fontFamily: fontTTTravelsBlack,
+                            marginTop: dimensions.height * 0.005,
                             fontSize: dimensions.width * 0.06,
                             alignSelf: 'flex-start',
                             color: '#B08711',
-                            marginTop: dimensions.height * 0.005,
+                            textAlign: 'left',
+                            fontFamily: fontTTTravelsBlack,
                         }}
                         >
                             {today}
                         </Text>
 
                         <View style={{
-                            flexDirection: 'row',
                             flexWrap: 'wrap',
                             width: dimensions.width * 0.9,
-                            marginTop: dimensions.height * 0.01,
+                            flexDirection: 'row',
                             alignSelf: 'center',
                             justifyContent: 'space-between',
+                            marginTop: dimensions.height * 0.01,
                         }}>
                             {daysArray.map((day, index) => (
                                 <View key={index} style={{
                                     backgroundColor: selectedFocusHabit.doneDays.includes(day) && !selectedFocusHabit.notFullfilledDays.includes(day) ? '#01C743'
                                         : !selectedFocusHabit.doneDays.includes(day) && selectedFocusHabit.notFullfilledDays.includes(day) ? '#FF1515' : '#D8D8D8',
                                     borderRadius: dimensions.width * 0.6,
-                                    width: dayItemSize * 0.9,
                                     height: dayItemSize * 0.9,
+                                    marginRight: index % 7 === 6 ? 0 : dimensions.width * 0.01,
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     marginBottom: dimensions.height * 0.01,
-                                    marginRight: index % 7 === 6 ? 0 : dimensions.width * 0.01,
+                                    width: dayItemSize * 0.9,
                                 }}>
                                     <Text style={{
-                                        textAlign: 'center',
-                                        fontFamily: fontTTTravelsBlack,
-                                        fontSize: dayItemSize * 0.45,
                                         color: '#000000',
+                                        textAlign: 'center',
+                                        fontSize: dayItemSize * 0.45,
+                                        fontFamily: fontTTTravelsBlack,
                                     }}>
                                         {day}
                                     </Text>
@@ -378,20 +378,20 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                                 setModalVisible(true);
                             }}
                             style={{
-                                width: dimensions.width * 0.9,
-                                backgroundColor: '#B08711',
+                                alignItems: 'center',
                                 borderRadius: dimensions.width * 0.6,
                                 height: dimensions.height * 0.065,
                                 justifyContent: 'center',
-                                alignItems: 'center',
                                 marginTop: dimensions.height * 0.02,
+                                width: dimensions.width * 0.9,
+                                backgroundColor: '#B08711',
                             }}>
                             <Text style={{
-                                textAlign: 'center',
-                                fontFamily: fontTTTravelsBlack,
+                                alignSelf: 'center',
                                 fontSize: dimensions.width * 0.045,
                                 alignItems: 'center',
-                                alignSelf: 'center',
+                                fontFamily: fontTTTravelsBlack,
+                                textAlign: 'center',
                                 color: 'white',
                             }}
                             >
@@ -404,43 +404,43 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
             <Modal visible={modalVisible} transparent={true} animationType="fade">
                 <View onPress={() => { setModalVisible(false) }} style={{
-                    width: dimensions.width,
                     height: dimensions.height,
+                    position: 'absolute',
                     backgroundColor: 'rgba(0, 0, 0, 0.5)',
                     zIndex: 999,
-                    position: 'absolute',
+                    width: dimensions.width,
                     top: 0,
                 }}>
-
                 </View>
+
                 <TouchableWithoutFeedback onPress={() => { setModalVisible(false) }}>
                     <View
                         style={{
-                            alignSelf: 'center',
+                            width: dimensions.width,
                             alignItems: 'center',
+                            zIndex: 999,
                             width: '100%',
                             paddingHorizontal: dimensions.width * 0.052,
-                            width: dimensions.width,
-                            zIndex: 999,
+                            alignSelf: 'center',
                             height: dimensions.height,
                         }}
                     >
                         <View style={{
-                            backgroundColor: '#fff',
                             width: dimensions.width,
-                            height: dimensions.height * 0.3,
-                            borderTopLeftRadius: dimensions.width * 0.07,
                             borderTopRightRadius: dimensions.width * 0.07,
+                            borderTopLeftRadius: dimensions.width * 0.07,
+                            backgroundColor: '#fff',
                             position: 'absolute',
+                            height: dimensions.height * 0.3,
                             bottom: 0,
                         }}>
                             <Text style={{
+                                marginTop: dimensions.height * 0.05,
                                 textAlign: 'left',
-                                fontFamily: fontTTTravelsBlack,
                                 fontSize: dimensions.width * 0.045,
+                                fontFamily: fontTTTravelsBlack,
                                 alignSelf: 'flex-start',
                                 color: '#000000',
-                                marginTop: dimensions.height * 0.05,
                                 paddingHorizontal: dimensions.width * 0.05,
                             }}
                             >
@@ -449,22 +449,22 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                             <TouchableOpacity
                                 onPress={() => updateDayStatus('done')}
                                 style={{
-                                    width: dimensions.width * 0.9,
-                                    backgroundColor: '#01C743',
+                                    alignItems: 'center',
                                     borderRadius: dimensions.width * 0.6,
                                     height: dimensions.height * 0.065,
                                     justifyContent: 'center',
-                                    alignItems: 'center',
+                                    width: dimensions.width * 0.9,
+                                    backgroundColor: '#01C743',
                                     marginTop: dimensions.height * 0.007,
                                     alignSelf: 'center',
                                 }}>
                                 <Text style={{
-                                    textAlign: 'center',
-                                    fontFamily: fontTTTravelsBlack,
+                                    color: 'white',
                                     fontSize: dimensions.width * 0.045,
                                     alignItems: 'center',
+                                    fontFamily: fontTTTravelsBlack,
                                     alignSelf: 'center',
-                                    color: 'white',
+                                    textAlign: 'center',
                                 }}
                                 >
                                     Done
@@ -474,32 +474,29 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                             <TouchableOpacity
                                 onPress={() => updateDayStatus('notFulfilled')}
                                 style={{
-                                    width: dimensions.width * 0.9,
-                                    backgroundColor: '#FF1515',
-                                    borderRadius: dimensions.width * 0.6,
-                                    height: dimensions.height * 0.065,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    marginTop: dimensions.height * 0.005,
                                     alignSelf: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: dimensions.width * 0.6,
+                                    justifyContent: 'center',
+                                    width: dimensions.width * 0.9,
+                                    marginTop: dimensions.height * 0.005,
+                                    backgroundColor: '#FF1515',
+                                    height: dimensions.height * 0.065,
                                 }}>
                                 <Text style={{
                                     textAlign: 'center',
-                                    fontFamily: fontTTTravelsBlack,
-                                    fontSize: dimensions.width * 0.045,
-                                    alignItems: 'center',
-                                    alignSelf: 'center',
                                     color: 'white',
+                                    fontSize: dimensions.width * 0.045,
+                                    alignSelf: 'center',
+                                    fontFamily: fontTTTravelsBlack,
+                                    alignItems: 'center',
                                 }}
                                 >
                                     Not fulfilled
                                 </Text>
                             </TouchableOpacity>
-
                         </View>
-
                     </View>
-
                 </TouchableWithoutFeedback>
             </Modal>
         </SafeAreaView>

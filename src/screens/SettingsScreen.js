@@ -111,7 +111,7 @@ const SettingsScreen = ({ selectedScreen, }) => {
             }}>
                 <Text style={{
                     color: '#000000',
-                    fontSize: dimensions.width * 0.042,
+                    fontSize: dimensions.width * 0.045,
                     fontWeight: 600,
                     fontFamily: fontTTTravelsRegular,
                 }}>Notifications</Text>
@@ -132,7 +132,7 @@ const SettingsScreen = ({ selectedScreen, }) => {
                 >
                     <Text style={{
                         color: '#000000',
-                        fontSize: dimensions.width * 0.042,
+                        fontSize: dimensions.width * 0.045,
                         fontWeight: 600,
                         fontFamily: fontTTTravelsRegular,
                     }}>

@@ -19,7 +19,7 @@ import {
 
 import FocusingScreen from './FocusingScreen';
 import FocusHabitDetailsScreen from './FocusHabitDetailsScreen';
-import SettingsScreen from './SettingsScreen';
+import FocusSettingsScreen from './FocusSettingsScreen';
 
 import { ArrowLeftIcon, CheckIcon, XMarkIcon } from 'react-native-heroicons/solid';
 
@@ -438,7 +438,7 @@ const HomeScreen = () => {
 
         </SafeAreaView>
       ) : selectedScreen === 'Settings' ? (
-        <SettingsScreen setSelectedScreen={setSelectedScreen}
+        <FocusSettingsScreen setSelectedScreen={setSelectedScreen}
           favorites={favorites} setFavorites={setFavorites}
         />
       ) : selectedScreen === 'HabitDetails' ? (

@@ -29,7 +29,7 @@ const focusTermsButtons = [
     },
 ]
 
-const SettingsScreen = ({ selectedScreen, }) => {
+const FocusSettingsScreen = ({ selectedScreen, }) => {
     const [dimensions, setDimensions] = useState(Dimensions.get('window'));
     const [isFocusNotificationEnabled, setFocusNotificationEnabled] = useState(false);
     const styles = createStyles(dimensions);
@@ -176,4 +176,4 @@ const createStyles = (dimensions) => StyleSheet.create({
     },
 });
 
-export default SettingsScreen;
+export default FocusSettingsScreen;

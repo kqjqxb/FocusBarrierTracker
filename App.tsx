@@ -1,8 +1,8 @@
 import React from 'react';
-import CopenhagenStack from './StackNavigator';
+import FocusTracker from './StackNavigator';
 
 function App() {
-  return <CopenhagenStack />;
+  return <FocusTracker />;
 }
 
 export default App;

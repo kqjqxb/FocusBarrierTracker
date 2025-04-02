@@ -6,7 +6,6 @@ import {
   Dimensions,
   Image,
   SafeAreaView,
-  Alert,
   StyleSheet,
   Modal,
 } from 'react-native';
@@ -26,37 +25,27 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
   const [selectedFocusAnswer, setSelectedFocusAnswer] = useState(null);
   const [currentFocusTestQuestIndex, setCurrentFocusTestQuestIndex] = useState(0);
 
-  const [correctFocusAnswersAmount, setCorrectFocusAnswersAmount] = useState(0);
-  const [wrongFocusAnswersAmount, setWrongFocusAnswersAmount] = useState(0);
+  const [answersPoints, setAnswersPoints] = useState(0);
+
 
   useEffect(() => {
     if (!focusTestStarted) {
-      setWrongFocusAnswersAmount(0);
       setCurrentFocusTestQuestIndex(0);
       setSelectedFocusAnswer(null);
     }
   }, [focusTestStarted]);
 
-  const handleFocusSelectAnswer = (isCorrect) => {
-    const newFocusTestWrong = !isCorrect ? wrongFocusAnswersAmount + 1 : wrongFocusAnswersAmount;
+  const handleFocusSelectAnswer = () => {
 
-    const newFocusTestCorrect = isCorrect ? correctFocusAnswersAmount + 1 : correctFocusAnswersAmount;
-
-    if (isCorrect) setCorrectFocusAnswersAmount(newFocusTestCorrect);
+    setAnswersPoints(prev => prev + selectedFocusAnswer.points);
 
     setSelectedFocusAnswer(null);
     if (currentFocusTestQuestIndex === focusTestQuestionsData.length - 1) {
       setFocusTestStarted(false);
-
       setResultsFocusModalVisible(true);
 
     } else setCurrentFocusTestQuestIndex(prev => prev + 1);
   };
-
-  useEffect(() => {
-    console.log('correctFocusAnswersAmount', correctFocusAnswersAmount);
-    console.log('selectedFocusAnswer', selectedFocusAnswer);
-  }, [correctFocusAnswersAmount, selectedFocusAnswer]);
 
   return (
     <SafeAreaView style={{
@@ -87,13 +76,13 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
               setFocusTestStarted(true);
             }}
             style={{
-              backgroundColor: '#B08711',
               width: dimensions.height * 0.12,
-              height: dimensions.height * 0.12,
-              borderRadius: dimensions.width * 0.6,
-              justifyContent: 'center',
               alignItems: 'center',
+              height: dimensions.height * 0.12,
+              backgroundColor: '#B08711',
+              borderRadius: dimensions.width * 0.6,
               alignSelf: 'center',
+              justifyContent: 'center',
               marginTop: dimensions.height * 0.05,
             }}>
             <Image
@@ -132,8 +121,7 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
               setFocusTestStarted(false);
               setCurrentFocusTestQuestIndex(0);
               setSelectedFocusAnswer(null);
-              setCorrectFocusAnswersAmount(0);
-              setWrongFocusAnswersAmount(0);
+              setAnswersPoints(0);
             }}>
               <Image
                 source={require('../assets/images/exitImage.png')}
@@ -162,19 +150,19 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
             resizeMode='contain'
           />
 
-          {focusTestQuestionsData[currentFocusTestQuestIndex]?.answers.map((answ, index) => (
+          {focusTestQuestionsData[currentFocusTestQuestIndex]?.answers.map((focusAnsw, index) => (
             <TouchableOpacity
               onPress={() => {
-                if (selectedFocusAnswer === answ) {
+                if (selectedFocusAnswer === focusAnsw) {
                   setSelectedFocusAnswer(null);
                 } else {
-                  setSelectedFocusAnswer(answ);
+                  setSelectedFocusAnswer(focusAnsw);
                 }
               }}
               key={index}
               style={{
                 borderRadius: dimensions.width * 0.6,
-                borderColor: selectedFocusAnswer === answ ? '#B08711' : 'transparent',
+                borderColor: selectedFocusAnswer === focusAnsw ? '#B08711' : 'transparent',
                 flexDirection: 'row',
                 justifyContent: 'center',
                 backgroundColor: '#fff',
@@ -196,7 +184,7 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
               <Text
                 style={[styles.mainTextBlack, { fontSize: dimensions.width * 0.042, }]}
               >
-                {answ.answer}
+                {focusAnsw.answer}
               </Text>
             </TouchableOpacity>
           ))}
@@ -208,7 +196,7 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
         <TouchableOpacity
           disabled={selectedFocusAnswer === null || !focusTestStarted}
           onPress={() => {
-            handleFocusSelectAnswer(selectedFocusAnswer.isCorrect);
+            handleFocusSelectAnswer();
           }}
           style={{
             width: dimensions.width * 0.9,
@@ -227,7 +215,7 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
             maxWidth: dimensions.width * 0.85,
           }]}
           >
-            Check
+            {currentFocusTestQuestIndex < focusTestQuestionsData.length - 1 ? 'Next' : 'Finish'}
           </Text>
         </TouchableOpacity>
       )}
@@ -246,8 +234,7 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
               setFocusTestStarted(false);
               setCurrentFocusTestQuestIndex(0);
               setSelectedFocusAnswer(null);
-              setCorrectFocusAnswersAmount(0);
-              setWrongFocusAnswersAmount(0);
+              setAnswersPoints(0);
             }}
             style={{
               width: dimensions.height * 0.07,
@@ -268,7 +255,7 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
               alignSelf: 'center',
               height: dimensions.height * 0.25,
               width: dimensions.width * 0.5,
-              marginTop: dimensions.height * 0.01,
+              marginTop: dimensions.height * 0.007,
             }}
             resizeMode='contain'
           />
@@ -291,7 +278,7 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
             paddingHorizontal: dimensions.width * 0.07,
           }]}
           >
-            {correctFocusAnswersAmount}/{focusTestQuestionsData.length}
+            {answersPoints}/100
           </Text>
           <View style={{
             width: dimensions.width * 0.9,
@@ -306,7 +293,7 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
             justifyContent: 'center',
           }}>
             <View style={{
-              width: dimensions.width * 0.9 * (correctFocusAnswersAmount / focusTestQuestionsData.length),
+              width: dimensions.width * 0.9 * (answersPoints / 100),
               height: dimensions.height * 0.04,
               backgroundColor: '#B08711',
               borderRadius: dimensions.width * 0.6,
@@ -325,7 +312,7 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
               maxWidth: dimensions.width * 0.9,
             }]}
             >
-              {correctFocusAnswersAmount > 8 ? focusTestProductivityTexts[0].title : correctFocusAnswersAmount > 5 ? focusTestProductivityTexts[1].title : correctFocusAnswersAmount > 2 ? focusTestProductivityTexts[2].title : focusTestProductivityTexts[3].title}
+              {answersPoints >= 80 ? focusTestProductivityTexts[0].title : answersPoints > 59 ? focusTestProductivityTexts[1].title : answersPoints > 39 ? focusTestProductivityTexts[2].title : focusTestProductivityTexts[3].title}
             </Text>
 
             <Text style={[styles.mainTextBlack, {
@@ -339,7 +326,7 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
               textAlign: 'justify',
             }]}
             >
-              {correctFocusAnswersAmount > 8 ? focusTestProductivityTexts[0].text : correctFocusAnswersAmount > 5 ? focusTestProductivityTexts[1].text : correctFocusAnswersAmount > 2 ? focusTestProductivityTexts[2].text : focusTestProductivityTexts[3].text}
+              {answersPoints >= 80 ? focusTestProductivityTexts[0].text : answersPoints > 59 ? focusTestProductivityTexts[1].text : answersPoints > 39 ? focusTestProductivityTexts[2].text : focusTestProductivityTexts[3].text}
             </Text>
           </View>
 

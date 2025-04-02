@@ -4,8 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeviceInfo from 'react-native-device-info';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import HomeScreen from './src/screens/HomeScreen';
-import LaunshingScreen from './src/screens/LaunshingScreen';
+import FocusHomeScreen from './src/screens/FocusHomeScreen';
+import LoadingFocusApp from './src/screens/LoadingFocusApp';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { UserProvider, UserContext } from './src/context/UserContext';
@@ -16,7 +16,7 @@ import { loadUserData } from './src/redux/userSlice';
 
 const Stack = createNativeStackNavigator();
 
-const CopenhagenStack = () => {
+const FocusTracker = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Provider store={store}>
@@ -32,58 +32,55 @@ const CopenhagenStack = () => {
 
 const AppNavigator = () => {
   const dispatch = useDispatch();
-  const [isOnboardWasVisible, setIsOnboardWasVisible] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
-
-  const [initializingCrovvnApp, setInitializingCrovvnApp] = useState(true);
+  const [initializingFocusTrackerApp, setInitializingFocusTrackerApp] = useState(true);
 
   useEffect(() => {
     dispatch(loadUserData());
   }, [dispatch]);
 
   useEffect(() => {
-    const loadCopenhagenUser = async () => {
+    const loadFocusTrackerUser = async () => {
       try {
-        const deviceId = await DeviceInfo.getUniqueId();
-        const storageKey = `currentUser_${deviceId}`;
-        const storedCrovvnUser = await AsyncStorage.getItem(storageKey);
+        const deviceFocusId = await DeviceInfo.getUniqueId();
+        const storageKey = `currentUser_${deviceFocusId}`;
+        const storedFocusTrackerUser = await AsyncStorage.getItem(storageKey);
         
-
-        if (storedCrovvnUser) {
-          setUser(JSON.parse(storedCrovvnUser));
+        if (storedFocusTrackerUser) {
+          setUser(JSON.parse(storedFocusTrackerUser));
         } 
       } catch (error) {
-        console.error('Error loading of cur user', error);
+        console.error('Error load focus user', error);
       } finally {
-        setInitializingCrovvnApp(false);
+        setInitializingFocusTrackerApp(false);
       }
     };
-    loadCopenhagenUser();
+    loadFocusTrackerUser();
   }, [setUser]);
 
-  if (initializingCrovvnApp) {
+  if (initializingFocusTrackerApp) {
     return (
       <View style={{
-        backgroundColor: '#000000',
+        backgroundColor: '#f6f6f6',
         alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
       }}>
-        <ActivityIndicator size="large" color="white" />
+        <ActivityIndicator size="large" color="#B08711" />
       </View>
     );
   }
 
   return (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName={'Home'}>
-          <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="launshingScreen" component={LaunshingScreen} options={{ headerShown: false }} />
+        <Stack.Navigator initialRouteName={'LoadingFocusApp'}>
+          <Stack.Screen name="Home" component={FocusHomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="LoadingFocusApp" component={LoadingFocusApp} options={{ headerShown: false }} />
         </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 
-export default CopenhagenStack;
+export default FocusTracker;

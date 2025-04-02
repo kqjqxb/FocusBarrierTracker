@@ -12,7 +12,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LineChart } from 'react-native-chart-kit';
 
 const fontInterRegular = 'Inter18pt-Regular';
-const fontTTTravelsRegular = 'TTTravels-Regular';
 const fontTTTravelsBlack = 'TTTravels-Black';
 
 const FocusAnalysScreen = () => {

@@ -2,30 +2,29 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import {
     Text,
-    Dimensions,
+    View,
     SafeAreaView,
     Switch,
+    Linking,
     Image,
-    View,
     TouchableOpacity,
     StyleSheet,
-    Linking,
+    Dimensions,
 } from 'react-native';
 
 const fontTTTravelsRegular = 'TTTravels-Regular';
 const fontTTTravelsBlack = 'TTTravels-Black';
-const fontTTTravelsBold = 'TTTravels-Bold';
 
 const focusTermsButtons = [
     {
-        id: 2,
-        focusButtonTitle: 'Privacy Policy',
-        focusButtonLink: 'https://google.com',
-    },
-    {
         id: 1,
         focusButtonTitle: 'Terms of Use',
-        focusButtonLink: 'https://google.com',
+        focusButtonLink: 'https://www.termsfeed.com/live/c776bc98-2626-4895-8590-1a72072a854a',
+    },
+    {
+        id: 2,
+        focusButtonTitle: 'Privacy Policy',
+        focusButtonLink: 'https://www.termsfeed.com/live/abc36d5f-bb53-46fd-a6ba-f09e43ff3def',
     },
 ]
 
@@ -93,12 +92,12 @@ const FocusSettingsScreen = ({ selectedScreen, }) => {
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center',
                 width: 0,
                 height: dimensions.height * 0.07,
                 alignSelf: 'center',
-                backgroundColor: '#fff',
+                alignItems: 'center',
                 paddingHorizontal: dimensions.width * 0.05,
+                backgroundColor: '#fff',
                 borderRadius: dimensions.width * 0.6,
                 shadowColor: '#000000',
                 shadowOffset: {

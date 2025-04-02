@@ -9,33 +9,28 @@ import {
     SafeAreaView,
     Modal,
     TouchableWithoutFeedback,
+    StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { ArrowLeftIcon, } from 'react-native-heroicons/solid';
 
-
-const fontInterRegular = 'Inter18pt-Regular';
-
 const fontTTTravelsRegular = 'TTTravels-Regular';
 const fontTTTravelsBlack = 'TTTravels-Black';
-const fontTTTravelsBold = 'TTTravels-Bold';
 
 const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSelectedFocusHabit, focusHabits, setFocusHabits }) => {
     const [dimensions, setDimensions] = useState(Dimensions.get('window'));
+    const styles = createStyles(dimensions);
+
     const [today, setToday] = useState(getFormattedDate());
     const [modalVisible, setModalVisible] = useState(false);
     const [deleteHabitModalVisible, setDeleteHabitModalVisible] = useState(false);
-    const [deleteHabit, setDeleteHabit] = useState(null);
     const [selectedDay, setSelectedDay] = useState(new Date().getDate());
 
     const currentDate = new Date();
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
     const daysArray = Array.from({ length: daysInMonth }, (_, i) => i + 1);
     const dayItemSize = (dimensions.width * 0.9) / 7;
-
-    const firstDayIndex = (new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay() + 6) % 7;
-    const gridDays = [...Array(firstDayIndex).fill(null), ...daysArray];
 
     function getFormattedDate() {
         const d = new Date();
@@ -65,14 +60,14 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
             const currentMonth = now.getMonth();
             let storedHabits = await AsyncStorage.getItem('focusHabits');
             storedHabits = storedHabits ? JSON.parse(storedHabits) : [];
-    
+
             storedHabits = storedHabits.map(habit => {
                 if (!habit.lastResetMonth || habit.lastResetMonth !== currentMonth) {
                     return { ...habit, doneDays: [], notFullfilledDays: [], lastResetMonth: currentMonth };
                 }
                 return habit;
             });
-    
+
             const habitIndex = storedHabits.findIndex(habit => habit.id === selectedFocusHabit.id);
             if (habitIndex !== -1) {
                 const habit = storedHabits[habitIndex];
@@ -89,13 +84,12 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                 }
                 storedHabits[habitIndex] = habit;
                 await AsyncStorage.setItem('focusHabits', JSON.stringify(storedHabits));
-    
-                // Update updatedStatuses array with the new update date
+
                 let updatedStatuses = await AsyncStorage.getItem('updatedStatuses');
                 updatedStatuses = updatedStatuses ? JSON.parse(updatedStatuses) : [];
                 updatedStatuses.push(new Date().toISOString());
                 await AsyncStorage.setItem('updatedStatuses', JSON.stringify(updatedStatuses));
-    
+
                 const updatedHabit = storedHabits.find(habit => habit.id === selectedFocusHabit.id);
                 setSelectedFocusHabit(updatedHabit);
             }
@@ -107,7 +101,6 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
     const handleDeleteFocusHabit = async (removeHabit) => {
         try {
-            // Retrieve the latest habits directly from AsyncStorage
             let storedHabits = await AsyncStorage.getItem('focusHabits');
             storedHabits = storedHabits ? JSON.parse(storedHabits) : [];
 
@@ -124,29 +117,29 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
     return (
         <SafeAreaView style={{
-            alignItems: 'center',
+            alignSelf: 'center',
             flex: 1,
             position: 'relative',
+            alignItems: 'center',
             width: '100%',
-            zIndex: 1,
             width: dimensions.width,
-            alignSelf: 'center',
+            zIndex: 1,
         }} >
             <View style={{
+                paddingBottom: dimensions.height * 0.01,
                 justifyContent: 'space-between',
-                flexDirection: 'row',
                 alignItems: 'center',
                 width: dimensions.width * 0.9,
-                paddingBottom: dimensions.height * 0.01,
+                flexDirection: 'row',
             }}>
                 <TouchableOpacity
                     style={{
-                        borderRadius: dimensions.width * 0.6,
+                        height: dimensions.height * 0.063,
                         justifyContent: 'center',
+                        borderRadius: dimensions.width * 0.6,
+                        backgroundColor: '#B08711',
                         alignItems: 'center',
                         width: dimensions.height * 0.063,
-                        backgroundColor: '#B08711',
-                        height: dimensions.height * 0.063,
                     }}
                     onPress={() => {
                         setSelectedScreen('Home');
@@ -158,11 +151,11 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
                 <TouchableOpacity
                     style={{
-                        borderRadius: dimensions.width * 0.6,
+                        width: dimensions.height * 0.063,
                         height: dimensions.height * 0.063,
+                        borderRadius: dimensions.width * 0.6,
                         justifyContent: 'center',
                         alignItems: 'center',
-                        width: dimensions.height * 0.063,
                     }}
                     onPress={() => {
                         setDeleteHabitModalVisible(true);
@@ -194,9 +187,9 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
                 <View style={{
                     width: dimensions.width,
+                    marginTop: dimensions.height * 0.02,
                     alignItems: 'center',
                     alignSelf: 'center',
-                    marginTop: dimensions.height * 0.02,
                     marginBottom: dimensions.height * 0.25,
                 }}>
                     <View style={{
@@ -206,65 +199,45 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                         width: dimensions.width * 0.9,
                     }}>
                         <Text style={{
-                            textAlign: 'center',
-                            fontFamily: fontTTTravelsBlack,
                             fontSize: dimensions.width * 0.06,
+                            fontFamily: fontTTTravelsBlack,
                             alignItems: 'center',
-                            alignSelf: 'center',
                             color: '#000',
+                            alignSelf: 'center',
+                            textAlign: 'center',
                         }}
                         >
                             {selectedFocusHabit.title}
                         </Text>
 
-                        <Text style={{
-                            textAlign: 'left',
-                            fontFamily: fontTTTravelsRegular,
-                            fontSize: dimensions.width * 0.035,
-                            alignSelf: 'flex-start',
-                            color: '#000',
-                            fontWeight: 400,
-                            marginTop: dimensions.height * 0.02,
-                        }}
-                        >
+                        <Text style={styles.labelTextStyles}>
                             Description
                         </Text>
 
                         <Text style={{
-                            textAlign: 'flex-start',
-                            marginTop: dimensions.height * 0.006,
                             fontFamily: fontTTTravelsRegular,
-                            fontSize: dimensions.width * 0.05,
-                            alignSelf: 'left',
+                            marginTop: dimensions.height * 0.006,
                             color: '#000',
                             fontWeight: 600,
+                            fontSize: dimensions.width * 0.05,
+                            alignSelf: 'left',
+                            textAlign: 'flex-start',
                         }}
                         >
                             {selectedFocusHabit.description}
                         </Text>
 
-
-                        <Text
-                            style={{
-                                fontFamily: fontInterRegular,
-                                fontWeight: 500,
-                                fontSize: dimensions.width * 0.037,
-                                color: '#999999',
-                                opacity: 0.7,
-                                marginTop: dimensions.height * 0.025,
-                                alignSelf: 'flex-start',
-                            }}
-                        >
+                        <Text style={styles.labelTextStyles}>
                             Time
                         </Text>
 
                         <Text style={{
-                            fontWeight: 600,
-                            marginTop: dimensions.height * 0.006,
-                            fontFamily: fontTTTravelsRegular,
-                            fontSize: dimensions.width * 0.045,
                             alignSelf: 'left',
+                            marginTop: dimensions.height * 0.006,
                             textAlign: 'flex-start',
+                            fontSize: dimensions.width * 0.045,
+                            fontWeight: 600,
+                            fontFamily: fontTTTravelsRegular,
                             color: '#000',
                         }}
                         >
@@ -273,75 +246,34 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
                         <View style={{
                             marginTop: dimensions.height * 0.02,
-                            alignItems: 'center',
-                            flexDirection: 'row',
                             alignSelf: 'flex-start',
+                            flexDirection: 'row',
                             justifyContent: 'flex-start',
+                            alignItems: 'center',
                         }}>
-                            <View style={{
-                                alignItems: 'center',
-                                height: dimensions.height * 0.055,
-                                paddingHorizontal: dimensions.width * 0.04,
-                                borderRadius: dimensions.width * 0.6,
-                                justifyContent: 'center',
-                                backgroundColor: '#D8D8D8',
-                            }}>
-                                <Text style={{
-                                    color: 'rgba(0, 0, 0, 0.5)',
-                                    textAlign: 'left',
-                                    fontWeight: 500,
-                                    fontFamily: fontTTTravelsRegular,
-                                    alignSelf: 'flex-start',
-                                    fontSize: dimensions.width * 0.03,
-                                }}
-                                >
+                            <View style={[styles.periodicityReminderViewStyles, { marginRight: dimensions.width * 0.01 }]}>
+                                <Text style={styles.periodicityReminderTextStyles}>
                                     {selectedFocusHabit.periodicity}
                                 </Text>
                             </View>
 
-                            <View style={{
-                                alignItems: 'center',
-                                height: dimensions.height * 0.055,
-                                marginLeft: dimensions.width * 0.01,
-                                borderRadius: dimensions.width * 0.6,
-                                justifyContent: 'center',
-                                backgroundColor: '#D8D8D8',
-                                paddingHorizontal: dimensions.width * 0.025,
-                            }}>
-                                <Text style={{
-                                    textAlign: 'left',
-                                    fontWeight: 500,
-                                    fontSize: dimensions.width * 0.03,
-                                    color: 'rgba(0, 0, 0, 0.5)',
-                                    alignSelf: 'flex-start',
-                                    fontFamily: fontTTTravelsRegular,
-                                }}
-                                >
+                            <View style={styles.periodicityReminderViewStyles}>
+                                <Text style={styles.periodicityReminderTextStyles}>
                                     {selectedFocusHabit.reminder}
                                 </Text>
                             </View>
                         </View>
 
-                        <Text
-                            style={{
-                                marginTop: dimensions.height * 0.025,
-                                fontSize: dimensions.width * 0.037,
-                                color: '#999999',
-                                opacity: 0.7,
-                                fontWeight: 500,
-                                alignSelf: 'flex-start',
-                                fontFamily: fontInterRegular,
-                            }}
-                        >
+                        <Text style={styles.labelTextStyles}>
                             Progress
                         </Text>
 
                         <Text style={{
-                            marginTop: dimensions.height * 0.005,
-                            fontSize: dimensions.width * 0.06,
                             alignSelf: 'flex-start',
+                            fontSize: dimensions.width * 0.06,
                             color: '#B08711',
                             textAlign: 'left',
+                            marginTop: dimensions.height * 0.005,
                             fontFamily: fontTTTravelsBlack,
                         }}
                         >
@@ -350,11 +282,11 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
                         <View style={{
                             flexWrap: 'wrap',
+                            marginTop: dimensions.height * 0.01,
                             width: dimensions.width * 0.9,
                             flexDirection: 'row',
                             alignSelf: 'center',
                             justifyContent: 'space-between',
-                            marginTop: dimensions.height * 0.01,
                         }}>
                             {daysArray.map((day, index) => (
                                 <View key={index} style={{
@@ -385,21 +317,21 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                                 setModalVisible(true);
                             }}
                             style={{
-                                alignItems: 'center',
+                                width: dimensions.width * 0.9,
+                                backgroundColor: '#B08711',
                                 borderRadius: dimensions.width * 0.6,
                                 height: dimensions.height * 0.065,
                                 justifyContent: 'center',
                                 marginTop: dimensions.height * 0.02,
-                                width: dimensions.width * 0.9,
-                                backgroundColor: '#B08711',
+                                alignItems: 'center',
                             }}>
                             <Text style={{
-                                alignSelf: 'center',
-                                fontSize: dimensions.width * 0.045,
-                                alignItems: 'center',
                                 fontFamily: fontTTTravelsBlack,
-                                textAlign: 'center',
+                                alignSelf: 'center',
                                 color: 'white',
+                                fontSize: dimensions.width * 0.045,
+                                textAlign: 'center',
+                                alignItems: 'center',
                             }}
                             >
                                 Mark as
@@ -411,11 +343,11 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
             <Modal visible={modalVisible} transparent={true} animationType="fade">
                 <View onPress={() => { setModalVisible(false) }} style={{
-                    height: dimensions.height,
+                    width: dimensions.width,
                     position: 'absolute',
                     backgroundColor: 'rgba(0, 0, 0, 0.5)',
                     zIndex: 999,
-                    width: dimensions.width,
+                    height: dimensions.height,
                     top: 0,
                 }}>
                 </View>
@@ -423,31 +355,44 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                 <TouchableWithoutFeedback onPress={() => { setModalVisible(false) }}>
                     <View
                         style={{
+                            height: dimensions.height,
                             width: dimensions.width,
                             alignItems: 'center',
                             zIndex: 999,
-                            width: '100%',
                             paddingHorizontal: dimensions.width * 0.052,
                             alignSelf: 'center',
-                            height: dimensions.height,
+                            width: '100%',
                         }}
                     >
                         <View style={{
                             width: dimensions.width,
+                            height: dimensions.height * 0.3,
                             borderTopRightRadius: dimensions.width * 0.07,
                             borderTopLeftRadius: dimensions.width * 0.07,
-                            backgroundColor: '#fff',
                             position: 'absolute',
-                            height: dimensions.height * 0.3,
+                            backgroundColor: '#fff',
                             bottom: 0,
                         }}>
+                            <View style={{
+                                width: dimensions.width * 0.17,
+                                alignSelf: 'center',
+                                borderRadius: dimensions.width * 0.6,
+                                backgroundColor: '#000',
+                                position: 'absolute',
+                                top: dimensions.height * 0.01,
+                                zIndex: 999,
+                                borderColor: '#000',
+                                height: dimensions.height * 0.004,
+                            }}>
+                            </View>
+
                             <Text style={{
+                                color: '#000000',
                                 marginTop: dimensions.height * 0.05,
                                 textAlign: 'left',
                                 fontSize: dimensions.width * 0.045,
                                 fontFamily: fontTTTravelsBlack,
                                 alignSelf: 'flex-start',
-                                color: '#000000',
                                 paddingHorizontal: dimensions.width * 0.05,
                             }}
                             >
@@ -455,50 +400,20 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                             </Text>
                             <TouchableOpacity
                                 onPress={() => updateDayStatus('done')}
-                                style={{
-                                    alignItems: 'center',
-                                    borderRadius: dimensions.width * 0.6,
-                                    height: dimensions.height * 0.065,
-                                    justifyContent: 'center',
-                                    width: dimensions.width * 0.9,
+                                style={[styles.modalMarkAsButtonsStyles, {
                                     backgroundColor: '#01C743',
-                                    marginTop: dimensions.height * 0.007,
-                                    alignSelf: 'center',
-                                }}>
-                                <Text style={{
-                                    color: 'white',
-                                    fontSize: dimensions.width * 0.045,
-                                    alignItems: 'center',
-                                    fontFamily: fontTTTravelsBlack,
-                                    alignSelf: 'center',
-                                    textAlign: 'center',
-                                }}
-                                >
+                                }]}>
+                                <Text style={styles.modalMarkAsTextStyles}>
                                     Done
                                 </Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity
                                 onPress={() => updateDayStatus('notFulfilled')}
-                                style={{
-                                    alignSelf: 'center',
-                                    alignItems: 'center',
-                                    borderRadius: dimensions.width * 0.6,
-                                    justifyContent: 'center',
-                                    width: dimensions.width * 0.9,
-                                    marginTop: dimensions.height * 0.005,
+                                style={[styles.modalMarkAsButtonsStyles, {
                                     backgroundColor: '#FF1515',
-                                    height: dimensions.height * 0.065,
-                                }}>
-                                <Text style={{
-                                    textAlign: 'center',
-                                    color: 'white',
-                                    fontSize: dimensions.width * 0.045,
-                                    alignSelf: 'center',
-                                    fontFamily: fontTTTravelsBlack,
-                                    alignItems: 'center',
-                                }}
-                                >
+                                }]}>
+                                <Text style={styles.modalMarkAsTextStyles}>
                                     Not fulfilled
                                 </Text>
                             </TouchableOpacity>
@@ -508,35 +423,34 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
             </Modal>
 
             <Modal visible={deleteHabitModalVisible} transparent={true} animationType="fade">
-                <View onPress={() => { setModalVisible(false) }} style={{
-                    height: dimensions.height,
+                <View style={{
+                    top: 0,
                     position: 'absolute',
                     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                    zIndex: 999,
                     width: dimensions.width,
-                    top: 0,
+                    zIndex: 999,
+                    height: dimensions.height,
                 }}>
                 </View>
 
                 <TouchableWithoutFeedback onPress={() => { setDeleteHabitModalVisible(false) }}>
                     <View
                         style={{
-                            width: dimensions.width,
+                            paddingHorizontal: dimensions.width * 0.052,
                             alignItems: 'center',
                             justifyContent: 'center',
                             zIndex: 999,
                             width: '100%',
-                            paddingHorizontal: dimensions.width * 0.052,
+                            width: dimensions.width,
                             alignSelf: 'center',
                             height: dimensions.height,
                         }}
                     >
                         <View style={{
-                            width: dimensions.width * 0.9,
+                            backgroundColor: '#fff',
                             paddingVertical: dimensions.height * 0.03,
                             borderRadius: dimensions.width * 0.07,
-                            backgroundColor: '#fff',
-                            height: dimensions.height * 0.3,
+                            width: dimensions.width * 0.9,
                         }}>
                             <Image
                                 source={require('../assets/images/focusTrashImage.png')}
@@ -549,13 +463,13 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                             />
 
                             <Text style={{
-                                marginTop: dimensions.height * 0.01,
+                                alignSelf: 'center',
                                 textAlign: 'center',
                                 fontSize: dimensions.width * 0.07,
-                                fontFamily: fontTTTravelsBlack,
-                                alignSelf: 'center',
-                                color: '#000000',
                                 paddingHorizontal: dimensions.width * 0.05,
+                                fontFamily: fontTTTravelsBlack,
+                                color: '#000000',
+                                marginTop: dimensions.height * 0.01,
                             }}
                             >
                                 Delete
@@ -563,13 +477,13 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
                             <Text style={{
                                 marginTop: dimensions.height * 0.01,
-                                textAlign: 'center',
+                                paddingHorizontal: dimensions.width * 0.03,
+                                alignSelf: 'center',
                                 fontSize: dimensions.width * 0.04,
                                 fontFamily: fontTTTravelsRegular,
                                 fontWeight: 400,
-                                alignSelf: 'center',
+                                textAlign: 'center',
                                 color: '#000000',
-                                paddingHorizontal: dimensions.width * 0.03,
                             }}
                             >
                                 Are you sure you want to delete this?
@@ -577,31 +491,24 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
                             <View style={{
                                 width: dimensions.width * 0.75,
-                                alignSelf: 'center',
+                                alignItems: 'center',
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
-                                alignItems: 'center',
+                                alignSelf: 'center',
                                 marginTop: dimensions.height * 0.02,
                             }}>
                                 <TouchableOpacity
                                     onPress={() => handleDeleteFocusHabit(selectedFocusHabit)}
-                                    style={{
-                                        alignSelf: 'center',
-                                        alignItems: 'center',
-                                        borderRadius: dimensions.width * 0.6,
-                                        justifyContent: 'center',
-                                        width: dimensions.width * 0.35,
-                                        marginTop: dimensions.height * 0.005,
+                                    style={[styles.modalDeleteButtonsStyles, {
                                         backgroundColor: '#FF1515',
-                                        height: dimensions.height * 0.065,
-                                    }}>
+                                    }]}>
                                     <Text style={{
+                                        alignItems: 'center',
                                         textAlign: 'center',
                                         color: 'white',
                                         fontSize: dimensions.width * 0.045,
                                         alignSelf: 'center',
                                         fontFamily: fontTTTravelsBlack,
-                                        alignItems: 'center',
                                     }}
                                     >
                                         Delete
@@ -610,23 +517,17 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
 
                                 <TouchableOpacity
                                     onPress={() => setDeleteHabitModalVisible(false)}
-                                    style={{
-                                        alignItems: 'center',
-                                        borderRadius: dimensions.width * 0.6,
-                                        height: dimensions.height * 0.065,
-                                        justifyContent: 'center',
-                                        width: dimensions.width * 0.35,
+
+                                    style={[styles.modalDeleteButtonsStyles, {
                                         backgroundColor: '#007AFF',
-                                        marginTop: dimensions.height * 0.007,
-                                        alignSelf: 'center',
-                                    }}>
+                                    }]}>
                                     <Text style={{
                                         color: 'white',
+                                        textAlign: 'center',
                                         fontSize: dimensions.width * 0.045,
                                         alignItems: 'center',
                                         fontFamily: fontTTTravelsBlack,
                                         alignSelf: 'center',
-                                        textAlign: 'center',
                                     }}
                                     >
                                         Cancel
@@ -640,5 +541,61 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
         </SafeAreaView>
     );
 };
+
+const createStyles = (dimensions) => StyleSheet.create({
+    labelTextStyles: {
+        marginTop: dimensions.height * 0.02,
+        fontSize: dimensions.width * 0.035,
+        textAlign: 'left',
+        alignSelf: 'flex-start',
+        fontFamily: fontTTTravelsRegular,
+        color: '#000',
+        fontWeight: 400,
+    },
+    modalMarkAsButtonsStyles: {
+        alignSelf: 'center',
+        alignItems: 'center',
+        borderRadius: dimensions.width * 0.6,
+        height: dimensions.height * 0.065,
+        width: dimensions.width * 0.9,
+        marginTop: dimensions.height * 0.007,
+        justifyContent: 'center',
+    },
+    modalMarkAsTextStyles: {
+        textAlign: 'center',
+        color: 'white',
+        fontSize: dimensions.width * 0.045,
+        alignItems: 'center',
+        alignSelf: 'center',
+        fontFamily: fontTTTravelsBlack,
+    },
+
+    modalDeleteButtonsStyles: {
+        marginTop: dimensions.height * 0.005,
+        alignItems: 'center',
+        borderRadius: dimensions.width * 0.6,
+        justifyContent: 'center',
+        width: dimensions.width * 0.35,
+        height: dimensions.height * 0.065,
+        alignSelf: 'center',
+    },
+
+    periodicityReminderViewStyles: {
+        backgroundColor: '#D8D8D8',
+        paddingHorizontal: dimensions.width * 0.04,
+        borderRadius: dimensions.width * 0.6,
+        height: dimensions.height * 0.055,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    periodicityReminderTextStyles: {
+        alignSelf: 'flex-start',
+        fontSize: dimensions.width * 0.03,
+        color: 'rgba(0, 0, 0, 0.5)',
+        fontWeight: 500,
+        fontFamily: fontTTTravelsRegular,
+        textAlign: 'left',
+    }
+});
 
 export default FocusHabitDetailsScreen;

@@ -7,17 +7,17 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const loadHereUser = async () => {
+    const loadFocusTrackerUser = async () => {
       try {
-        const storedHereUser = await AsyncStorage.getItem('currentUser');
-        if (storedHereUser) {
-          setUser(JSON.parse(storedHereUser));
+        const storedFocusTrackerUser = await AsyncStorage.getItem('currentUser');
+        if (storedFocusTrackerUser) {
+          setUser(JSON.parse(storedFocusTrackerUser));
         }
       } catch (error) {
         console.error('Error loading user data:', error);
       }
     };
-    loadHereUser();
+    loadFocusTrackerUser();
   }, []);
 
   const logout = async () => {

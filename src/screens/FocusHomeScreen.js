@@ -8,6 +8,7 @@ import {
   Modal,
   SafeAreaView,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -17,19 +18,18 @@ import {
 
 
 
-import FocusingScreen from './FocusingScreen';
+import FocusProductivityScreen from './FocusProductivityScreen';
 import FocusHabitDetailsScreen from './FocusHabitDetailsScreen';
 import FocusSettingsScreen from './FocusSettingsScreen';
 
 import { ArrowLeftIcon, CheckIcon, XMarkIcon } from 'react-native-heroicons/solid';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
 import FocusAnalysScreen from './FocusAnalysScreen';
 import FocusTestScreen from './FocusTestScreen';
 
 
-const homePagesButtons = [
+const focusScreensButtons = [
   { screen: 'Home', title: 'Habit', iconImage: require('../assets/icons/simpleFocusIcons/proCalendar.png'), selectedIconImage: require('../assets/icons/goldFocusIcons/proCalendar.png') },
   { screen: 'Focusing', title: ' Productivity', iconImage: require('../assets/icons/simpleFocusIcons/proCase.png'), selectedIconImage: require('../assets/icons/goldFocusIcons/proCase.png') },
   { screen: 'Analysis', title: 'Analysis', iconImage: require('../assets/icons/simpleFocusIcons/proAnalysis.png'), selectedIconImage: require('../assets/icons/goldFocusIcons/proAnalysis.png') },
@@ -37,24 +37,17 @@ const homePagesButtons = [
   { screen: 'Settings', title: 'Settings', iconImage: require('../assets/icons/simpleFocusIcons/proSettings.png'), selectedIconImage: require('../assets/icons/goldFocusIcons/proSettings.png') },
 ];
 
-
-
-const fontInterRegular = 'Inter18pt-Regular';
-
 const fontTTTravelsRegular = 'TTTravels-Regular';
 const fontTTTravelsBlack = 'TTTravels-Black';
 const fontTTTravelsBold = 'TTTravels-Bold';
 
-const HomeScreen = () => {
+const FocusHomeScreen = () => {
 
   const [dimensions, setDimensions] = useState(Dimensions.get('window'));
   const [selectedScreen, setSelectedScreen] = useState('Home');
+  const styles = createStyles(dimensions);
 
-  const [favorites, setFavorites] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [activeSwipeableId, setActiveSwipeableId] = useState(null);
-  const swipeableRefs = useRef(new Map());
 
   const [focusTestStarted, setFocusTestStarted] = useState(false);
 
@@ -72,70 +65,6 @@ const HomeScreen = () => {
       setFocusTime(selectedTime);
     }
   };
-
-  const renderRightProjectActions = (proj) => (
-    <TouchableOpacity
-      onPress={() => removeProject(proj)}
-      style={{
-        justifyContent: 'center',
-        backgroundColor: 'transparent',
-        alignItems: 'center',
-        height: '100%',
-        width: 68,
-      }}
-    >
-      <XMarkIcon size={dimensions.height * 0.05} color='#FFDE59' />
-    </TouchableOpacity>
-  );
-
-  const removeProject = async (projectToRemove) => {
-    try {
-      const updatedProjects = focusHabits.filter(proj =>
-        !(proj.id === projectToRemove.id)
-      );
-      await AsyncStorage.setItem('focusHabits', JSON.stringify(updatedProjects));
-      setFocusHabits(updatedProjects);
-    } catch (error) {
-      Alert.alert('Error', 'Failed to remove fHabit from focusHabits.');
-    }
-  };
-
-
-
-  const handleSwipeableToOpen = (id) => {
-    swipeableRefs.current.forEach((ref, key) => {
-      if (key !== id && ref) {
-        ref.close();
-      }
-    });
-    setActiveSwipeableId(id);
-  };
-
-
-  const handleSwipeableClose = (id) => {
-    if (activeSwipeableId === id) {
-      setActiveSwipeableId(null);
-    }
-  };
-
-
-  const handleSwipeableProjectOpen = (id) => {
-    swipeableRefs.current.forEach((ref, key) => {
-      if (key !== id && ref) {
-        ref.close();
-      }
-    });
-    setActiveSwipeableId(id);
-  };
-
-
-  const handleSwipeableProjectClose = (id) => {
-    if (activeSwipeableId === id) {
-      setActiveSwipeableId(null);
-    }
-  };
-
-
 
   const saveFocusHabit = async () => {
     try {
@@ -200,7 +129,6 @@ const HomeScreen = () => {
       backgroundColor: '#f6f6f6',
       width: dimensions.width
     }}>
-
       {selectedScreen === 'Home' ? (
         <SafeAreaView style={{
           width: dimensions.width,
@@ -260,19 +188,19 @@ const HomeScreen = () => {
                 You haven't created habits yet
               </Text>
 
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress={() => {
                   setModalVisible(true);
                 }}
-              style={{
-                width: dimensions.width * 0.83,
-                backgroundColor: '#B08711',
-                borderRadius: dimensions.width * 0.6,
-                height: dimensions.height * 0.065,
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: dimensions.height * 0.02,
-              }}>
+                style={{
+                  width: dimensions.width * 0.83,
+                  backgroundColor: '#B08711',
+                  borderRadius: dimensions.width * 0.6,
+                  height: dimensions.height * 0.065,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: dimensions.height * 0.02,
+                }}>
                 <Text style={{
                   textAlign: 'center',
                   fontFamily: fontTTTravelsBlack,
@@ -293,43 +221,41 @@ const HomeScreen = () => {
               paddingBottom: dimensions.height * 0.16,
             }} showsVerticalScrollIndicator={false}>
               {focusHabits.map((fHabit, index) => (
-                <TouchableOpacity 
+                <TouchableOpacity
                   onPress={() => {
                     setSelectedFocusHabit(fHabit);
                     setSelectedScreen('HabitDetails');
                   }}
-                key={index} style={{
-                  width: dimensions.width * 0.9,
-                  backgroundColor: 'white',
-                  borderRadius: dimensions.width * 0.05,
-                  paddingVertical: dimensions.height * 0.012,
-                  paddingHorizontal: dimensions.width * 0.05,
-                  alignSelf: 'center',
-                  marginTop: dimensions.height * 0.01,
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: dimensions.height * 0.005,
-                  },
-                  shadowOpacity: 0.1,
-                  shadowRadius: dimensions.width * 0.02,
-                }}>
-                  <TouchableOpacity style={{
-                    position: 'absolute',
-                    top: dimensions.height * 0.005,
-                    right: dimensions.width * 0.01,
-                    zIndex: 5,
+                  key={index} style={{
+                    width: dimensions.width * 0.9,
+                    backgroundColor: 'white',
+                    borderRadius: dimensions.width * 0.05,
+                    paddingVertical: dimensions.height * 0.012,
+                    paddingHorizontal: dimensions.width * 0.05,
+                    alignSelf: 'center',
+                    marginTop: dimensions.height * 0.01,
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: dimensions.height * 0.005,
+                    },
+                    shadowOpacity: 0.1,
+                    shadowRadius: dimensions.width * 0.02,
                   }}>
-                    <Image
-                      source={require('../assets/icons/arrowUpRightIcon.png')}
-                      style={{
-                        width: dimensions.height * 0.074,
-                        height: dimensions.height * 0.074,
-                      }}
-                      resizeMode='contain'
-                    />
 
-                  </TouchableOpacity>
+                  <Image
+                    source={require('../assets/icons/arrowUpRightIcon.png')}
+                    style={{
+                      width: dimensions.height * 0.074,
+                      height: dimensions.height * 0.074,
+                      position: 'absolute',
+                      top: dimensions.height * 0.005,
+                      right: dimensions.width * 0.01,
+                      zIndex: 5,
+                    }}
+                    resizeMode='contain'
+                  />
+
                   <Text style={{
                     textAlign: 'left',
                     fontFamily: fontTTTravelsBold,
@@ -439,51 +365,50 @@ const HomeScreen = () => {
         </SafeAreaView>
       ) : selectedScreen === 'Settings' ? (
         <FocusSettingsScreen setSelectedScreen={setSelectedScreen}
-          favorites={favorites} setFavorites={setFavorites}
         />
       ) : selectedScreen === 'HabitDetails' ? (
-        <FocusHabitDetailsScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} selectedFocusHabit={selectedFocusHabit} 
+        <FocusHabitDetailsScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} selectedFocusHabit={selectedFocusHabit}
           setSelectedFocusHabit={setSelectedFocusHabit} focusHabits={focusHabits} setFocusHabits={setFocusHabits}
         />
       ) : selectedScreen === 'Focusing' ? (
-        <FocusingScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} />
+        <FocusProductivityScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} />
       ) : selectedScreen === 'Analysis' ? (
         <FocusAnalysScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} />
       ) : selectedScreen === 'FocusTest' ? (
-        <FocusTestScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} setFocusTestStarted={setFocusTestStarted} focusTestStarted={focusTestStarted}/>
+        <FocusTestScreen setSelectedScreen={setSelectedScreen} selectedScreen={selectedScreen} setFocusTestStarted={setFocusTestStarted} focusTestStarted={focusTestStarted} />
       ) : null}
 
-      {!(selectedScreen === 'FocusTest' && focusTestStarted) && (
-
+      {!(selectedScreen === 'FocusTest' && focusTestStarted) && selectedScreen !== 'HabitDetails' && (
         <View
           style={{
             position: 'absolute',
+            backgroundColor: 'white',
             bottom: dimensions.height * 0.04,
-            paddingBottom: dimensions.height * 0.03,
             paddingTop: dimensions.height * 0.019,
             paddingHorizontal: dimensions.width * 0.055,
-            backgroundColor: 'white',
+            paddingBottom: dimensions.height * 0.03,
             shadowColor: '#000',
             shadowOffset: {
               width: 0,
               height: dimensions.height * 0.01,
             },
             shadowOpacity: 0.16,
-            shadowRadius: dimensions.width * 0.03,
             elevation: 5,
             width: dimensions.width * 0.91,
             height: dimensions.height * 0.08,
             borderRadius: dimensions.width * 0.5,
+            shadowRadius: dimensions.width * 0.03,
 
-            flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
             alignSelf: 'center',
+            flexDirection: 'row',
+
             paddingVertical: dimensions.height * 0.004,
             zIndex: 5000,
           }}
         >
-          {homePagesButtons.map((buttn, index) => (
+          {focusScreensButtons.map((buttn, index) => (
             <TouchableOpacity
               key={index}
               onPress={() => setSelectedScreen(buttn.screen)}
@@ -497,12 +422,12 @@ const HomeScreen = () => {
             >
               <View style={{
                 alignItems: 'center',
-                justifyContent: 'center',
-                textDecorationLine: 'underline',
-                textDecorationLineColor: '#B08711',
-                textDecorationLineWidth: dimensions.width * 0.005,
                 borderBottomWidth: selectedScreen === buttn.screen ? dimensions.width * 0.005 : 0,
+                textDecorationLine: 'underline',
                 borderBottomColor: '#B08711',
+                textDecorationLineWidth: dimensions.width * 0.005,
+                textDecorationLineColor: '#B08711',
+                justifyContent: 'center',
                 paddingBottom: dimensions.height * 0.01,
               }}>
                 <Image
@@ -519,13 +444,13 @@ const HomeScreen = () => {
               {selectedScreen === buttn.screen && (
                 <Text
                   style={{
+                    alignSelf: 'flex-start',
                     fontFamily: fontTTTravelsBold,
+                    marginLeft: dimensions.width * 0.01,
+                    fontWeight: 700,
+                    textAlign: 'left',
                     fontSize: dimensions.width * 0.033,
                     color: '#B08711',
-                    fontWeight: 700,
-                    alignSelf: 'flex-start',
-                    textAlign: 'left',
-                    marginLeft: dimensions.width * 0.01,
                     top: -dimensions.height * 0.005,
                     maxWidth: dimensions.width * 0.25,
                   }}
@@ -544,12 +469,12 @@ const HomeScreen = () => {
           <SafeAreaView
             style={{
               alignSelf: 'center',
+              backgroundColor: '#f6f6f6',
               alignItems: 'center',
               width: '100%',
-              paddingHorizontal: dimensions.width * 0.052,
               width: dimensions.width,
               zIndex: 999,
-              backgroundColor: '#f6f6f6',
+              paddingHorizontal: dimensions.width * 0.052,
               height: dimensions.height,
             }}
           >
@@ -633,32 +558,9 @@ const HomeScreen = () => {
                 value={title}
                 onChangeText={setTitle}
                 placeholderTextColor="#8A8A8E"
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  paddingVertical: dimensions.width * 0.035,
-                  paddingHorizontal: dimensions.width * 0.04,
-                  backgroundColor: 'transparent',
-                  borderRadius: dimensions.width * 0.7,
-                  width: dimensions.width * 0.9,
-                  color: '#000000',
-                  fontFamily: fontTTTravelsRegular,
-                  fontSize: dimensions.width * 0.041,
+                style={[{
                   fontWeight: title.length === 0 ? 600 : 700,
-                  textAlign: 'left',
-                  marginTop: dimensions.height * 0.01,
-                  backgroundColor: '#FFFFFF',
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: dimensions.height * 0.01,
-                  },
-                  shadowOpacity: 0.16,
-                  shadowRadius: dimensions.width * 0.03,
-                  elevation: 5,
-
-                }}
+                }, styles.textInputStyles]}
               />
 
               <TextInput
@@ -666,33 +568,12 @@ const HomeScreen = () => {
                 value={description}
                 onChangeText={setDescription}
                 placeholderTextColor="#8A8A8E"
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  paddingVertical: dimensions.width * 0.035,
-                  paddingHorizontal: dimensions.width * 0.04,
-                  backgroundColor: 'transparent',
+                style={[styles.textInputStyles, {
                   borderRadius: dimensions.width * 0.06,
-                  width: dimensions.width * 0.9,
-                  color: '#000000',
-                  fontFamily: fontTTTravelsRegular,
-                  fontSize: dimensions.width * 0.041,
                   fontWeight: description.length === 0 ? 600 : 700,
-                  textAlign: 'left',
-                  marginTop: dimensions.height * 0.01,
-                  backgroundColor: '#FFFFFF',
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: dimensions.height * 0.01,
-                  },
-                  shadowOpacity: 0.16,
-                  shadowRadius: dimensions.width * 0.03,
-                  elevation: 5,
                   height: dimensions.height * 0.14,
                   textAlignVertical: 'top',
-                }}
+                }]}
                 multiline={true}
               />
 
@@ -717,32 +598,12 @@ const HomeScreen = () => {
                       setSelectedPeriodicity('');
                     } else setSelectedPeriodicity(periodicity);
                   }}
-                  key={index} style={{
-                    width: dimensions.width * 0.9,
-                    alignSelf: 'center',
+                  key={index} style={[styles.listButtonsStyles, {
                     backgroundColor: selectedPeriodicity === periodicity ? '#B08711' : 'white',
-                    borderRadius: dimensions.width * 0.6,
-                    height: dimensions.height * 0.065,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginTop: dimensions.height * 0.006,
-                    shadowColor: '#000',
-                    shadowOffset: {
-                      width: 0,
-                      height: dimensions.height * 0.01,
-                    },
-                    shadowOpacity: 0.1,
-                    shadowRadius: dimensions.width * 0.03,
-                    elevation: 5,
-                  }}>
-                  <Text style={{
-                    textAlign: 'center',
-                    fontFamily: fontTTTravelsRegular,
-                    fontSize: dimensions.width * 0.05,
-                    alignSelf: 'center',
-                    color: selectedPeriodicity === periodicity ? '#fff' : '#000',
-                    fontWeight: 600,
-                  }}
+                  }]}>
+                  <Text style={[styles.listButtonTextStyles, {
+                    color: selectedPeriodicity === periodicity ? '#fff' : '#000'
+                  }]}
                   >
                     {periodicity}
                   </Text>
@@ -802,32 +663,12 @@ const HomeScreen = () => {
                       setSelectedReminder('');
                     } else setSelectedReminder(reminder);
                   }}
-                  key={index} style={{
-                    width: dimensions.width * 0.9,
-                    alignSelf: 'center',
+                  key={index} style={[styles.listButtonsStyles, {
                     backgroundColor: selectedReminder === reminder ? '#B08711' : 'white',
-                    borderRadius: dimensions.width * 0.6,
-                    height: dimensions.height * 0.065,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginTop: dimensions.height * 0.006,
-                    shadowColor: '#000',
-                    shadowOffset: {
-                      width: 0,
-                      height: dimensions.height * 0.01,
-                    },
-                    shadowOpacity: 0.1,
-                    shadowRadius: dimensions.width * 0.03,
-                    elevation: 5,
-                  }}>
-                  <Text style={{
-                    textAlign: 'center',
-                    fontFamily: fontTTTravelsRegular,
-                    fontSize: dimensions.width * 0.05,
-                    alignSelf: 'center',
+                  }]}>
+                  <Text style={[styles.listButtonTextStyles, {
                     color: selectedReminder === reminder ? '#fff' : '#000',
-                    fontWeight: 600,
-                  }}
+                  }]}
                   >
                     {reminder}
                   </Text>
@@ -841,4 +682,57 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+const createStyles = (dimensions) => StyleSheet.create({
+  textInputStyles: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: dimensions.width * 0.035,
+    paddingHorizontal: dimensions.width * 0.04,
+    backgroundColor: 'transparent',
+    borderRadius: dimensions.width * 0.7,
+    width: dimensions.width * 0.9,
+    color: '#000000',
+    fontFamily: fontTTTravelsRegular,
+    fontSize: dimensions.width * 0.041,
+    textAlign: 'left',
+    marginTop: dimensions.height * 0.01,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: dimensions.height * 0.01,
+    },
+    shadowOpacity: 0.16,
+    shadowRadius: dimensions.width * 0.03,
+    elevation: 5,
+  },
+
+  listButtonsStyles: {
+    width: dimensions.width * 0.9,
+    alignSelf: 'center',
+    borderRadius: dimensions.width * 0.6,
+    height: dimensions.height * 0.065,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: dimensions.height * 0.006,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: dimensions.height * 0.01,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: dimensions.width * 0.03,
+    elevation: 5,
+  },
+
+  listButtonTextStyles: {
+    textAlign: 'center',
+    fontFamily: fontTTTravelsRegular,
+    fontSize: dimensions.width * 0.05,
+    alignSelf: 'center',
+    fontWeight: 600,
+  }
+});
+
+export default FocusHomeScreen;

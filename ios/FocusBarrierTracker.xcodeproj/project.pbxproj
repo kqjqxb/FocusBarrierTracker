@@ -7,49 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0ACE152BB56548E2A0605AEA /* Inter18pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 86905FC253984BC68479C100 /* Inter18pt-Medium.ttf */; };
 		0C80B921A6F3F58F76C31292 /* libPods-FocusBarrierTracker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-FocusBarrierTracker.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		1B0F7387FC9F4C28B89806E5 /* Inter18pt-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4EB66D069D844E9C9FB27787 /* Inter18pt-Bold.ttf */; };
-		3A767B113DDF49ACB8F32EEC /* Inter18pt-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6628BD42B84C4C47BFB900DB /* Inter18pt-Italic.ttf */; };
 		43D25C533CAB449E99BD3656 /* TTTravels-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC1B3812630C44AF957119C3 /* TTTravels-Italic.ttf */; };
 		446D37A07D9B44EBA227BB21 /* TTTravels-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 33D161D684704140956F1851 /* TTTravels-Black.ttf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		839B3519084F42B7BE75669B /* Inter18pt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41C122E6DEBD4F79A9AAD6AA /* Inter18pt-SemiBold.ttf */; };
 		96B9998ACA2144EAA115EFF6 /* TTTravels-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25292A7EB9164C3086BE1C04 /* TTTravels-ExtraBold.ttf */; };
 		A696371660094E2B96DE33C2 /* TTTravels-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17FF4E188DF142CDA6D3B39C /* TTTravels-Light.ttf */; };
 		ADF2C2E70A97485CB28CC36C /* TTTravels-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C0461108E61F4588B9705FC3 /* TTTravels-Regular.ttf */; };
 		D9645B7982BE4BE18FD7D597 /* TTTravels-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E83E4F671D51423088C5CF74 /* TTTravels-Bold.ttf */; };
 		E5DF66668C7744F4AB23B195 /* TTTravels-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 16493C16662F4CA284E551DD /* TTTravels-Medium.ttf */; };
-		E7E8F220B30F4DD7AA094655 /* Inter18pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CD5265A76494DD1A0C5EB1B /* Inter18pt-Regular.ttf */; };
-		EB3F77DD21DD491096750E1D /* Inter18pt-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D9B08633D424BA2B61A4C6D /* Inter18pt-BoldItalic.ttf */; };
 		F1E2FBB78B61328F65774003 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0CD5265A76494DD1A0C5EB1B /* Inter18pt-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter18pt-Regular.ttf"; path = "../src/assets/fonts/Inter18pt-Regular.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* FocusBarrierTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FocusBarrierTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FocusBarrierTracker/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FocusBarrierTracker/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = FocusBarrierTracker/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		16493C16662F4CA284E551DD /* TTTravels-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Medium.ttf"; path = "../src/assets/fonts/TTTravels-Medium.ttf"; sourceTree = "<group>"; };
-		17FF4E188DF142CDA6D3B39C /* TTTravels-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Light.ttf"; path = "../src/assets/fonts/TTTravels-Light.ttf"; sourceTree = "<group>"; };
-		25292A7EB9164C3086BE1C04 /* TTTravels-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-ExtraBold.ttf"; path = "../src/assets/fonts/TTTravels-ExtraBold.ttf"; sourceTree = "<group>"; };
-		33D161D684704140956F1851 /* TTTravels-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Black.ttf"; path = "../src/assets/fonts/TTTravels-Black.ttf"; sourceTree = "<group>"; };
+		16493C16662F4CA284E551DD /* TTTravels-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Medium.ttf"; path = "../src/assets/fonts/TTTravels-Medium.ttf"; sourceTree = "<group>"; };
+		17FF4E188DF142CDA6D3B39C /* TTTravels-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Light.ttf"; path = "../src/assets/fonts/TTTravels-Light.ttf"; sourceTree = "<group>"; };
+		25292A7EB9164C3086BE1C04 /* TTTravels-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-ExtraBold.ttf"; path = "../src/assets/fonts/TTTravels-ExtraBold.ttf"; sourceTree = "<group>"; };
+		33D161D684704140956F1851 /* TTTravels-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Black.ttf"; path = "../src/assets/fonts/TTTravels-Black.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-FocusBarrierTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FocusBarrierTracker.debug.xcconfig"; path = "Target Support Files/Pods-FocusBarrierTracker/Pods-FocusBarrierTracker.debug.xcconfig"; sourceTree = "<group>"; };
-		41C122E6DEBD4F79A9AAD6AA /* Inter18pt-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter18pt-SemiBold.ttf"; path = "../src/assets/fonts/Inter18pt-SemiBold.ttf"; sourceTree = "<group>"; };
-		4EB66D069D844E9C9FB27787 /* Inter18pt-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter18pt-Bold.ttf"; path = "../src/assets/fonts/Inter18pt-Bold.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-FocusBarrierTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FocusBarrierTracker.release.xcconfig"; path = "Target Support Files/Pods-FocusBarrierTracker/Pods-FocusBarrierTracker.release.xcconfig"; sourceTree = "<group>"; };
-		5D9B08633D424BA2B61A4C6D /* Inter18pt-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter18pt-BoldItalic.ttf"; path = "../src/assets/fonts/Inter18pt-BoldItalic.ttf"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-FocusBarrierTracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FocusBarrierTracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6628BD42B84C4C47BFB900DB /* Inter18pt-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter18pt-Italic.ttf"; path = "../src/assets/fonts/Inter18pt-Italic.ttf"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = FocusBarrierTracker/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = FocusBarrierTracker/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		86905FC253984BC68479C100 /* Inter18pt-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter18pt-Medium.ttf"; path = "../src/assets/fonts/Inter18pt-Medium.ttf"; sourceTree = "<group>"; };
-		C0461108E61F4588B9705FC3 /* TTTravels-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Regular.ttf"; path = "../src/assets/fonts/TTTravels-Regular.ttf"; sourceTree = "<group>"; };
-		DC1B3812630C44AF957119C3 /* TTTravels-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Italic.ttf"; path = "../src/assets/fonts/TTTravels-Italic.ttf"; sourceTree = "<group>"; };
-		E83E4F671D51423088C5CF74 /* TTTravels-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Bold.ttf"; path = "../src/assets/fonts/TTTravels-Bold.ttf"; sourceTree = "<group>"; };
+		C0461108E61F4588B9705FC3 /* TTTravels-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Regular.ttf"; path = "../src/assets/fonts/TTTravels-Regular.ttf"; sourceTree = "<group>"; };
+		DC1B3812630C44AF957119C3 /* TTTravels-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Italic.ttf"; path = "../src/assets/fonts/TTTravels-Italic.ttf"; sourceTree = "<group>"; };
+		E83E4F671D51423088C5CF74 /* TTTravels-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TTTravels-Bold.ttf"; path = "../src/assets/fonts/TTTravels-Bold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -89,12 +77,6 @@
 		3D37D3B3B82A41849E9E1798 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4EB66D069D844E9C9FB27787 /* Inter18pt-Bold.ttf */,
-				5D9B08633D424BA2B61A4C6D /* Inter18pt-BoldItalic.ttf */,
-				6628BD42B84C4C47BFB900DB /* Inter18pt-Italic.ttf */,
-				86905FC253984BC68479C100 /* Inter18pt-Medium.ttf */,
-				0CD5265A76494DD1A0C5EB1B /* Inter18pt-Regular.ttf */,
-				41C122E6DEBD4F79A9AAD6AA /* Inter18pt-SemiBold.ttf */,
 				33D161D684704140956F1851 /* TTTravels-Black.ttf */,
 				E83E4F671D51423088C5CF74 /* TTTravels-Bold.ttf */,
 				25292A7EB9164C3086BE1C04 /* TTTravels-ExtraBold.ttf */,
@@ -104,7 +86,6 @@
 				C0461108E61F4588B9705FC3 /* TTTravels-Regular.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -209,12 +190,6 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				F1E2FBB78B61328F65774003 /* PrivacyInfo.xcprivacy in Resources */,
-				1B0F7387FC9F4C28B89806E5 /* Inter18pt-Bold.ttf in Resources */,
-				EB3F77DD21DD491096750E1D /* Inter18pt-BoldItalic.ttf in Resources */,
-				3A767B113DDF49ACB8F32EEC /* Inter18pt-Italic.ttf in Resources */,
-				0ACE152BB56548E2A0605AEA /* Inter18pt-Medium.ttf in Resources */,
-				E7E8F220B30F4DD7AA094655 /* Inter18pt-Regular.ttf in Resources */,
-				839B3519084F42B7BE75669B /* Inter18pt-SemiBold.ttf in Resources */,
 				446D37A07D9B44EBA227BB21 /* TTTravels-Black.ttf in Resources */,
 				D9645B7982BE4BE18FD7D597 /* TTTravels-Bold.ttf in Resources */,
 				96B9998ACA2144EAA115EFF6 /* TTTravels-ExtraBold.ttf in Resources */,
@@ -321,6 +296,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = FocusBarrierTracker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
@@ -334,7 +310,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.focusbarrier.tracker.app;
 				PRODUCT_NAME = FocusBarrierTracker;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -349,6 +325,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = FocusBarrierTracker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -361,7 +338,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.focusbarrier.tracker.app;
 				PRODUCT_NAME = FocusBarrierTracker;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

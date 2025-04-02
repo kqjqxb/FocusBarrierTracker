@@ -7,12 +7,12 @@ workflows:
       groups:
         - creds
       vars:
-        XCODE_WORKSPACE: "CrovvnPlanner.xcworkspace" # <----
-        XCODE_SCHEME: "CrovvnPlanner" # <----
-        BUNDLE_ID: "com.crovvnplanner.app" # <----
-        APP_STORE_APP_ID: 6742072863 # <----
-        APP_STORE_CONNECT_KEY_ID: "K855U32N4W" # <----
-        APP_STORE_CONNECT_ISSUER_ID: "74d1942f-88b3-472d-89ff-735677e603f5" # <----
+        XCODE_WORKSPACE: "FocusBarrierTracker.xcworkspace" # <----
+        XCODE_SCHEME: "FocusBarrierTracker" # <----
+        BUNDLE_ID: "com.focusbarrier.tracker.app" # <----
+        APP_STORE_APP_ID: 6744118398 # <----
+        APP_STORE_CONNECT_KEY_ID: "RKC33JD8JH" # <----
+        APP_STORE_CONNECT_ISSUER_ID: "022df95e-9448-4ee2-bac7-e99984e9fa36" # <----
         node: latest
         xcode: latest
         cocoapods: default
@@ -60,7 +60,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - kama_kowka15@op.pl       # <----
+          - hubertburba@gmail.com       # <----
         notify:
           success: true
           failure: false

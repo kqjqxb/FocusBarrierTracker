@@ -142,7 +142,8 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                         width: dimensions.height * 0.063,
                     }}
                     onPress={() => {
-                        setSelectedScreen('Home');
+                        // setSelectedScreen('Home');
+                        handleBackFocusScreen();
 
                     }}
                 >

@@ -142,9 +142,7 @@ const FocusHabitDetailsScreen = ({ setSelectedScreen, selectedFocusHabit, setSel
                         width: dimensions.height * 0.063,
                     }}
                     onPress={() => {
-                        // setSelectedScreen('Home');
-                        handleBackFocusScreen();
-
+                        setSelectedScreen('Home');
                     }}
                 >
                     <ArrowLeftIcon size={dimensions.width * 0.07} color='white' />

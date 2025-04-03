@@ -73,8 +73,7 @@ const FocusTestScreen = ({ setFocusTestStarted, focusTestStarted }) => {
 
           <TouchableOpacity
             onPress={() => {
-              // setFocusTestStarted(true);
-              startFocusTest();
+              setFocusTestStarted(true);
             }}
             style={{
               width: dimensions.height * 0.12,

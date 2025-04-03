@@ -350,8 +350,7 @@ const FocusProductivityScreen = ({ selectedScreen }) => {
         </View>
 
         <TouchableOpacity
-          // onPress={handleToggleTimer}
-          onPress={() => {startProductivityTimer()}}
+          onPress={handleToggleTimer}
           style={{
             width: dimensions.height * 0.08,
             height: dimensions.height * 0.08,
